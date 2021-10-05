@@ -1,43 +1,43 @@
-Build on Linux:
+<h1>Build on Linux:</h1>
 
-mkdir ~/php-fpm-log-exporter
-cd ~/php-fpm-log-exporter
-git clone https://github.com/MaxZamaliev/php-fpm-log-exporter.git
-export GOPATH=`pwd`
-go get github.com/hpcloud/tail
-go get github.com/prometheus/client_golang/prometheus
-go get github.com/prometheus/client_golang/prometheus/promhttp
-go build php-fpm-log-exporter.go
+mkdir ~/php-fpm-log-exporter<br>
+cd ~/php-fpm-log-exporter<br>
+git clone https://github.com/MaxZamaliev/php-fpm-log-exporter.git<br>
+export GOPATH=\`pwd\`<br>
+go get github.com/hpcloud/tail<br>
+go get github.com/prometheus/client_golang/prometheus<br>
+go get github.com/prometheus/client_golang/prometheus/promhttp<br>
+go build php-fpm-log-exporter.go<br>
 
 
-Install on CentOS 8:
+<h1>Install on CentOS 8:</h1>
 
-1. Copy binary file php-fpm-log-exporter to /usr/local/bin/
+<b>1. Copy binary file php-fpm-log-exporter to /usr/local/bin/</b>
 
-2. Create user:
+<b>2. Create user:</b>
 
 useradd -M -s /bin/false php-fpm_exporter
 
-3. Create file `/etc/systemd/system/php-fpm-log_exporter.service` with text:
+<b>3. Create file `/etc/systemd/system/php-fpm-log_exporter.service` with text:</b>
 
-[Unit]
-Description=Prometheus PHP-FPM Exporter
-Wants=network-online.target
-After=network-online.target
+[Unit]<br>
+Description=Prometheus PHP-FPM Exporter<br>
+Wants=network-online.target<br>
+After=network-online.target<br>
+<br>
+[Service]<br>
+User=php-fpm_exporter<br>
+Group=php-fpm_exporter<br>
+Type=simple<br>
+ExecStart=/usr/local/bin/php-fpm-log-exporter<br>
+<br>
+[Install]<br>
+WantedBy=multi-user.target<br>
 
-[Service]
-User=php-fpm_exporter
-Group=php-fpm_exporter
-Type=simple
-ExecStart=/usr/local/bin/php-fpm-log-exporter
-
-[Install]
-WantedBy=multi-user.target
-
-4. Enable and start service:
+<b>4. Enable and start service:</b>
 
 systemctl enable --now php-fpm-log-exporter
 
-5. Test service:
+<b>5. Test service:</b>
 
 curl http://localhost:9253/metrics
