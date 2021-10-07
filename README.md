@@ -10,6 +10,12 @@ go get github.com/prometheus/client_golang/prometheus/promhttp<br>
 go build php-fpm-log-exporter.go<br>
 
 
+<h1>Prepare php-fpm:</h1>
+Enable access log in your php-fpm, for example write in "/etc/php-fpm.d/<your domain>.conf" file:
+  
+  access.log = /var/log/php-fpm/$pool-access.log
+  access.format = "%t %C%% %{kilo}M %{mili}d %s \"%m %r%Q%q\""
+
 <h1>Install on CentOS 8:</h1>
 
 <b>1. Copy binary file php-fpm-log-exporter to /usr/local/bin/</b>
